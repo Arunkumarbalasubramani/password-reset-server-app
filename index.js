@@ -9,7 +9,11 @@ connection();
 
 const PORT = 5000;
 app.use(signInRoutes);
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.get("/", (req, res) => {
   res.send("Welcome to Password reset app");
 });

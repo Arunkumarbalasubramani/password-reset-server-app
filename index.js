@@ -4,16 +4,13 @@ const connection = require("./db/connection");
 const cors = require("cors");
 const app = express();
 app.use(express.json());
+app.use(cors());
 const signInRoutes = require("./routes/signin");
 connection();
 
 const PORT = 5000;
 app.use(signInRoutes);
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+
 app.get("/", (req, res) => {
   res.send("Welcome to Password reset app");
 });

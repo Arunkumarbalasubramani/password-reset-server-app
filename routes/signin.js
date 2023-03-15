@@ -1,8 +1,10 @@
 const express = require("express");
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const generateHasedPassword = require("../routes/bcrypt");
+
 router.get("/signin", (req, res) => {
   res.send("Welcome to sign in Page");
 });
@@ -50,4 +52,30 @@ router.post("/user/signin", async (req, res) => {
   }
 });
 
+router.post("/user/password-reset", async (req, res) => {
+  try {
+    const userData = await Users.findOne({ email: req.body.email });
+    if (!userData) {
+      res.status(404).send({ Message: "User Does Not Exists. Please Sign Up" });
+    } else {
+      const secret = process.env.MY_SECRET_KEY + userData.password;
+      const token = jwt.sign(
+        { email: userData.email, id: userData._id },
+        secret,
+        {
+          expiresIn: "5m",
+        }
+      );
+      const link = `https://password-reset-serverapp.onrender.com/reset-password/${userData._id}/${token}`;
+      res.send(link);
+    }
+  } catch (error) {
+    res.status(500).send(-`Error While Connecting to DB - ${error}`);
+  }
+});
+
+router.get("/reset-password/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
+  res.send(done);
+});
 module.exports = router;

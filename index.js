@@ -4,15 +4,15 @@ const connection = require("./db/connection");
 const cors = require("cors");
 const app = express();
 app.use(express.json());
+connection();
+
 const corsOptions = {
-  methods: ["GET", "HEAD", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
 
 const signInRoutes = require("./routes/signin");
-connection();
 
 const PORT = 5000;
 app.use(signInRoutes);

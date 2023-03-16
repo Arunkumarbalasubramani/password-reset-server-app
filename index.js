@@ -4,7 +4,13 @@ const connection = require("./db/connection");
 const cors = require("cors");
 const app = express();
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  methods: ["GET", "HEAD", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 const signInRoutes = require("./routes/signin");
 connection();
 

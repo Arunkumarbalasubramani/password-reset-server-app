@@ -6,11 +6,7 @@ const app = express();
 app.use(express.json());
 connection();
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-};
-
-app.use(cors(corsOptions));
+app.use(cors({ origin: "http://localhost:3000" }));
 
 const signInRoutes = require("./routes/signin");
 

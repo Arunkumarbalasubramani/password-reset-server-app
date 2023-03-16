@@ -59,6 +59,7 @@ router.post("/user/password-reset", async (req, res) => {
       res.status(404).send({ Message: "User Does Not Exists. Please Sign Up" });
     } else {
       const secret = process.env.MY_SECRET_KEY + userData.password;
+
       const token = jwt.sign(
         { email: userData.email, id: userData._id },
         secret,
@@ -66,7 +67,7 @@ router.post("/user/password-reset", async (req, res) => {
           expiresIn: "5m",
         }
       );
-      const link = `https://password-reset-serverapp.onrender.com/reset-password/${userData._id}/${token}`;
+      const link = `http://localhost:5000/reset-password/${userData._id}/${token}`;
       res.send(link);
     }
   } catch (error) {
@@ -75,7 +76,22 @@ router.post("/user/password-reset", async (req, res) => {
 });
 
 router.get("/reset-password/:id/:token", async (req, res) => {
-  const { id, token } = req.params;
-  res.send(done);
+  try {
+    const { id, token } = req.params;
+    const userData = await Users.findById(id);
+    const secret = process.env.MY_SECRET_KEY + userData.password;
+    if (!userData) {
+      res.status(404).send("User Does Not Exist");
+    } else {
+      const verifyToken = jwt.verify(token, secret);
+      if (verifyToken) {
+        res.status(201).send("User Verified Successfully");
+      } else {
+        res.status(403).send({ Message: "Not Verified " });
+      }
+    }
+  } catch (error) {
+    res.status(500).send(`Error While Connecting to Server- ${error}`);
+  }
 });
 module.exports = router;

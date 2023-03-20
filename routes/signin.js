@@ -25,7 +25,7 @@ router.post("/user/passwordreset", async (req, res) => {
           expiresIn: "5m",
         }
       );
-
+      console.log(token);
       const link = `http://localhost:5000/reset-password/${userData._id}/${token}`;
 
       // res.send(link);
@@ -36,6 +36,7 @@ router.post("/user/passwordreset", async (req, res) => {
     res.status(500).json({ Error: `Error While Connecting to db ${error}` });
   }
 });
+
 router.post("/user/signup", async (req, res) => {
   const userName = req.body.name;
 

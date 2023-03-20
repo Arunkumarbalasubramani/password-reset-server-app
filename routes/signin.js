@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const generateHasedPassword = require("../routes/bcrypt");
+const nodemailer = require("nodemailer");
 
 router.get("/signin", (req, res) => {
   res.send("Welcome to sign in Page");
@@ -15,7 +16,6 @@ router.post("/user/passwordreset", async (req, res) => {
     if (!userData) {
       res.status(404).json({ Message: "User Does Not Exists. Please Sign Up" });
     } else {
-      console.log("Line 61");
       const secret = process.env.MY_SECRET_KEY + userData.password;
 
       const token = jwt.sign(
@@ -25,11 +25,36 @@ router.post("/user/passwordreset", async (req, res) => {
           expiresIn: "5m",
         }
       );
-      console.log(token);
-      const link = `http://localhost:5000/reset-password/${userData._id}/${token}`;
+      const link = `https://password-reset-serverapp.onrender.com/api/reset-password/${userData._id}/${token}`;
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.GMAIL_ID,
+          pass: process.env.PASSWORD,
+        },
+      });
+
+      const options = {
+        from: process.env.GMAIL_ID,
+        to: userData.email,
+        subject: " Password Reset Verification",
+        text: `We  have received Your Request for Password reset.
+        Please Click on the Below Link to Reset Your Password
+        ${link}
+        
+        `,
+      };
+      transporter.sendMail(options, (err, data) => {
+        if (err) {
+          res
+            .status(403)
+            .json({ Error: ` Error While Sending Reset Mail -${err}` });
+        } else {
+          res.status(200).json({ Message: "Mail Sent", link });
+        }
+      });
 
       // res.send(link);
-      res.status(200).json({ link });
     }
   } catch (error) {
     console.log(error);

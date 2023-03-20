@@ -9,6 +9,62 @@ router.get("/signin", (req, res) => {
   res.send("Welcome to sign in Page");
 });
 
+// router.post("/user/passwordreset", async (req, res) => {
+//   console.log("Entered");
+//   console.log(req.body);
+//   try {
+//     const userData = await Users.findOne({ email: req.body.email });
+//     if (!userData) {
+//       res.status(404).send({ Message: "User Does Not Exists. Please Sign Up" });
+//     } else {
+//       console.log("Line 61");
+//       const secret = process.env.MY_SECRET_KEY + userData.password;
+
+//       const token = jwt.sign(
+//         { email: userData.email, id: userData._id },
+//         secret,
+//         {
+//           expiresIn: "5m",
+//         }
+//       );
+//       console.log(token);
+//       const link = `http://localhost:5000/reset-password/${userData._id}/${token}`;
+
+//       // res.send(link);
+//       res.status(200).json({ link });
+//     }
+//   } catch (error) {
+//     res.status(500).send(-`Error While Connecting to DB - ${error}`);
+//   }
+// });
+
+router.post("/user/passwordreset", async (req, res) => {
+  try {
+    const userData = await Users.findOne({ email: req.body.email });
+    if (!userData) {
+      res.status(404).json({ Message: "User Does Not Exists. Please Sign Up" });
+    } else {
+      console.log("Line 61");
+      const secret = process.env.MY_SECRET_KEY + userData.password;
+
+      const token = jwt.sign(
+        { email: userData.email, id: userData._id },
+        secret,
+        {
+          expiresIn: "5m",
+        }
+      );
+
+      const link = `http://localhost:5000/reset-password/${userData._id}/${token}`;
+
+      // res.send(link);
+      res.status(200).json({ link });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ Error: `Error While Connecting to db ${error}` });
+  }
+});
 router.post("/user/signup", async (req, res) => {
   const userName = req.body.name;
 
@@ -52,29 +108,6 @@ router.post("/user/signin", async (req, res) => {
   }
 });
 
-router.post("/user/password-reset", async (req, res) => {
-  try {
-    const userData = await Users.findOne({ email: req.body.email });
-    if (!userData) {
-      res.status(404).send({ Message: "User Does Not Exists. Please Sign Up" });
-    } else {
-      const secret = process.env.MY_SECRET_KEY + userData.password;
-
-      const token = jwt.sign(
-        { email: userData.email, id: userData._id },
-        secret,
-        {
-          expiresIn: "5m",
-        }
-      );
-      const link = `http://localhost:5000/reset-password/${userData._id}/${token}`;
-      res.send(link);
-    }
-  } catch (error) {
-    res.status(500).send(-`Error While Connecting to DB - ${error}`);
-  }
-});
-
 router.get("/reset-password/:id/:token", async (req, res) => {
   try {
     const { id, token } = req.params;
@@ -94,4 +127,5 @@ router.get("/reset-password/:id/:token", async (req, res) => {
     res.status(500).send(`Error While Connecting to Server- ${error}`);
   }
 });
+
 module.exports = router;

@@ -116,14 +116,40 @@ router.get("/reset-password/:id/:token", async (req, res) => {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
         res.status(201).send(`
+        <style>
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+</style>
+
         <h1>Reset Your Password</h1>
         <form action="/reset-password/:id/:token" method="POST">
           <input type="hidden" name="userId" value="${id}">
           <input type="hidden" name="token" value="${token}">
           <label for="password">New Password</label>
-          <input type="password" name="password" id="password" required placeholder="Enter Your New Password">
+          <input type="password" name="password" id="password" required placeholder="Enter Your New Password"> <br/>
           <label for="confirmpassword">Confirm Password</label>
-          <input type="password" name="password" id="confirmpassword" required placeholder="Confirm Password">
+          <input type="password" name="password" id="confirmpassword" required placeholder="Confirm Password"><br/>
           <button type="submit">Reset Password</button>
         </form>
       `);
@@ -137,7 +163,8 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 });
 
 router.post("/reset-password/:id/:token", async (req, res) => {
-  const { userId, token, password } = req.body;
-  console.log(userId, token, password);
+  const { id, token } = req.params;
+  const { password } = req.body;
+  console.log(id, token, password);
 });
 module.exports = router;

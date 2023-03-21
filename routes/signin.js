@@ -188,7 +188,16 @@ router.get("/reset-password/:id/:token", async (req, res) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
           const passwordInput = document.getElementById("password");
-          console.log(passwordInput.value);
+  
+          const response = await fetch(
+            "https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(passwordInput.value),
+            }
         };
       </script>
       <div class="container">
@@ -233,7 +242,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 
 router.post("/reset-password/:id/:token", async (req, res) => {
   try {
-    console.log(req.body);
+    res.json({ data: req.body });
     // const { id, token } = req.params;
     // const userData = await Users.findById(id);
     // const secret = process.env.MY_SECRET_KEY + userData.password;

@@ -79,7 +79,7 @@
         const passwordInput = document.getElementById("password");
 
         const response = await fetch(
-          "http://localhost:5000/api/reset-password/6419dfa89dd0e84485044dd0/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydW5rdW1hci52YnMuYkBnbWFpbC5jb20iLCJpZCI6IjY0MTlkZmE4OWRkMGU4NDQ4NTA0NGRkMCIsImlhdCI6MTY3OTQyNDczOSwiZXhwIjoxNjc5NDI1MDM5fQ.Ryj9BobppGBy3K8dhMHciuUQvxqtIcAkShXRh2bHzSU",
+          "http://localhost:5000/api/reset-password/6419dfa89dd0e84485044dd0/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydW5rdW1hci52YnMuYkBnbWFpbC5jb20iLCJpZCI6IjY0MTlkZmE4OWRkMGU4NDQ4NTA0NGRkMCIsImlhdCI6MTY3OTQyNTIyMywiZXhwIjoxNjc5NDI1NTIzfQ.8hDR3_iJ-3HULsHAogbXin5O5mJx5_R16CD6qfJBYoQ",
           {
             method: "POST",
             headers: {
@@ -88,7 +88,7 @@
             body: JSON.stringify(passwordInput.value),
           }
         );
-        return response.json();
+        console.log(response.json());
       };
     </script>
   </head>

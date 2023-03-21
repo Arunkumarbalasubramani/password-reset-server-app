@@ -77,8 +77,15 @@
       const handleSubmit = async (e) => {
         e.preventDefault();
         const passwordInput = document.getElementById("password");
-        console.log(passwordInput.value);
-        // const response = await
+
+        const response = await fetch("", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(passwordInput.value),
+        });
+        return response.json();
       };
     </script>
   </head>

@@ -171,7 +171,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 
         <div className="container">
           <h1 >Reset Your Password</h1>
-          <form action="/api/reset-password/:id/:token" method="POST">
+          <form action="/api/reset-password/:${id}/:${token}" method="POST">
             <input type="hidden" name="userId" value="${id}">
             <input type="hidden" name="token" value="${token}">
             <label for="password" classname="label-text">New Password</label>

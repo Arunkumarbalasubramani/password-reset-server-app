@@ -201,7 +201,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   });
   userData.save();
   res.status(201).json({
-    Message: `Password reset successfully for the User-${userData.name}`,
+    Message: `Password reset successfully for the User-${userData.name}. Please Login Again`,
   });
 });
 module.exports = router;

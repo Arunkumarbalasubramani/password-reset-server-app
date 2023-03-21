@@ -190,7 +190,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
           const passwordInput = document.getElementById("password");
   
           const response = await fetch(
-            "https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}",
+            "https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}",
             {
               method: "POST",
               headers: {
@@ -241,7 +241,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   }
 });
 
-router.post("/reset-password/:id/:token", async (req, res) => {
+router.post("/user/reset-password/:id/:token", async (req, res) => {
   try {
     console.log("entered");
     console.log(req.body);

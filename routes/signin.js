@@ -117,7 +117,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
       if (verifyToken) {
         res.status(201).send(`
         <h1>Reset Your Password</h1>
-        <form action="/password-reset/user" method="POST">
+        <form action="/reset-password/:id/:token" method="POST">
           <input type="hidden" name="userId" value="${id}">
           <input type="hidden" name="token" value="${token}">
           <label for="password">New Password</label>

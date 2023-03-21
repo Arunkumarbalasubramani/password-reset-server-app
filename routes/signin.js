@@ -140,18 +140,47 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   button[type="submit"]:hover {
     background-color: #45a049;
   }
+  .container{
+    margin: 4rem;
+    padding: 1.5rem;
+ 
+    height: auto;
+    width: 40%;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    @media screen and (max-width: 768px) {
+      width: 80%;
+      height: auto;
+      background: linear-gradient(
+        45deg,
+        #e0fbfcff,
+        #c2dfe3ff,
+        #9db4c0ff,
+        #5c6b73ff,
+        #253237ff
+      );
+    }
+.label-text{
+  color: black;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: right;
+}
+  }
 </style>
 
-        <h1>Reset Your Password</h1>
-        <form action="/reset-password/:id/:token" method="POST">
-          <input type="hidden" name="userId" value="${id}">
-          <input type="hidden" name="token" value="${token}">
-          <label for="password">New Password</label>
-          <input type="password" name="password" id="password" required placeholder="Enter Your New Password"> <br/>
-          <label for="confirmpassword">Confirm Password</label>
-          <input type="password" name="password" id="confirmpassword" required placeholder="Confirm Password"><br/>
-          <button type="submit">Reset Password</button>
-        </form>
+        <div className="container">
+          <h1 >Reset Your Password</h1>
+          <form action="/reset-password/:id/:token" method="POST">
+            <input type="hidden" name="userId" value="${id}">
+            <input type="hidden" name="token" value="${token}">
+            <label for="password" classname="label-text">New Password</label>
+            <input type="password" name="password" id="password" required placeholder="Enter Your New Password"> <br/>
+            <label for="confirmpassword">Confirm Password</label>
+            <input type="password" name="password" id="confirmpassword" required placeholder="Confirm Password"><br/>
+            <button type="submit">Reset Password</button>
+          </form>
+        </div>
       `);
       } else {
         res.status(403).send({ Message: "Not Verified " });

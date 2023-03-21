@@ -233,7 +233,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 
 router.post("/reset-password/:id/:token", async (req, res) => {
   try {
-    console.log();
+    console.log(req.body);
     // const { id, token } = req.params;
     // const userData = await Users.findById(id);
     // const secret = process.env.MY_SECRET_KEY + userData.password;

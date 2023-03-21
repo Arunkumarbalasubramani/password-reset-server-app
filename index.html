@@ -78,13 +78,16 @@
         e.preventDefault();
         const passwordInput = document.getElementById("password");
 
-        const response = await fetch("", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(passwordInput.value),
-        });
+        const response = await fetch(
+          "http://localhost:5000/api/reset-password/6419dfa89dd0e84485044dd0/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydW5rdW1hci52YnMuYkBnbWFpbC5jb20iLCJpZCI6IjY0MTlkZmE4OWRkMGU4NDQ4NTA0NGRkMCIsImlhdCI6MTY3OTQyNDczOSwiZXhwIjoxNjc5NDI1MDM5fQ.Ryj9BobppGBy3K8dhMHciuUQvxqtIcAkShXRh2bHzSU",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(passwordInput.value),
+          }
+        );
         return response.json();
       };
     </script>

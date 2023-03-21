@@ -120,8 +120,10 @@ router.get("/reset-password/:id/:token", async (req, res) => {
         <form action="/password-reset/user" method="POST">
           <input type="hidden" name="userId" value="${id}">
           <input type="hidden" name="token" value="${token}">
-          <label>New Password</label>
-          <input type="password" name="password" required>
+          <label for="password">New Password</label>
+          <input type="password" name="password" id="password" required placeholder="Enter Your New Password">
+          <label for="confirmpassword">Confirm Password</label>
+          <input type="password" name="password" id="confirmpassword" required placeholder="Confirm Password">
           <button type="submit">Reset Password</button>
         </form>
       `);

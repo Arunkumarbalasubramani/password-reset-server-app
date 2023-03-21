@@ -164,7 +164,15 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 
 router.post("/reset-password/:id/:token", async (req, res) => {
   const { id, token } = req.params;
-  const { password } = req.body;
-  console.log(id, token, password);
+  const passwordTobeHashed = req.body.password;
+  const hashedPassword = await generateHasedPassword(passwordTobeHashed);
+
+  const userData = await Users.findByIdAndUpdate(id, {
+    password: hashedPassword,
+  });
+  userData.save();
+  res.status(201).json({
+    Message: `Password reset successfully for the User-${userData.name}`,
+  });
 });
 module.exports = router;

@@ -192,16 +192,27 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 });
 
 router.post("/reset-password/:id/:token", async (req, res) => {
-  const { id, token } = req.params;
-  const passwordTobeHashed = req.body.password;
-  const hashedPassword = await generateHasedPassword(passwordTobeHashed);
-
-  const userData = await Users.findByIdAndUpdate(id, {
-    password: hashedPassword,
-  });
-  userData.save();
-  res.status(201).json({
-    Message: `Password reset successfully for the User-${userData.name}. Please Login Again`,
-  });
+  try {
+    const { id, token } = req.params;
+    const userData = await Users.findById(id);
+    const secret = process.env.MY_SECRET_KEY + userData.password;
+    if (!userData) {
+      res.status(404).send("User Does Not Exist");
+    } else {
+      const verifyToken = jwt.verify(token, secret);
+      if (verifyToken) {
+        const newPassword = req.body.password;
+        const hashedPassword = await generateHasedPassword(newPassword);
+        userData.password = hashedPassword;
+        await userData.save();
+        res.status(200).send("Password updated successfully");
+      } else {
+        res.status(403).send("Not Verified");
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error while updating password");
+  }
 });
 module.exports = router;

@@ -115,7 +115,16 @@ router.get("/reset-password/:id/:token", async (req, res) => {
     } else {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
-        res.status(201).send("User Verified Successfully");
+        res.status(201).send(`
+        <h1>Reset Your Password</h1>
+        <form action="/api/reset-password" method="POST">
+          <input type="hidden" name="userId" value="${id}">
+          <input type="hidden" name="token" value="${token}">
+          <label>New Password</label>
+          <input type="password" name="password" required>
+          <button type="submit">Reset Password</button>
+        </form>
+      `);
       } else {
         res.status(403).send({ Message: "Not Verified " });
       }

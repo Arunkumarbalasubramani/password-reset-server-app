@@ -116,28 +116,14 @@ router.get("/reset-password/:id/:token", async (req, res) => {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
         res.status(201).send(`
-        <div className="signin-container">
-          <Form >
-          
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label className="label-text"> Enter Your New Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                name="password"
-               
-              />
-              
-            </Form.Group>
-           
-            <div className="submit-btn">
-              <Button variant="contained" size="medium" type="submit">
-                Reset Password
-              </Button>
-            </div>
-          </Form>
-        </div>
+        <h1>Reset Your Password</h1>
+        <form action="/password-reset/user" method="POST">
+          <input type="hidden" name="userId" value="${id}">
+          <input type="hidden" name="token" value="${token}">
+          <label>New Password</label>
+          <input type="password" name="password" required>
+          <button type="submit">Reset Password</button>
+        </form>
       `);
       } else {
         res.status(403).send({ Message: "Not Verified " });
@@ -148,4 +134,8 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   }
 });
 
+router.post("/password-reset/user", async (req, res) => {
+  const { userId, token, password } = req.body;
+  console.log(userId, token, password);
+});
 module.exports = router;

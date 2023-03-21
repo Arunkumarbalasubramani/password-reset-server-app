@@ -117,84 +117,110 @@ router.get("/reset-password/:id/:token", async (req, res) => {
       if (verifyToken) {
         res.status(201).send(`
         <style>
-  label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-  }
-  button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  .container{
-    margin: 4rem;
-    padding: 1.5rem;
- 
-    height: auto;
-    width: 40%;
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 5px;
-    @media screen and (max-width: 768px) {
-      width: 80%;
-      height: auto;
-      background: linear-gradient(
-        45deg,
-        #e0fbfcff,
-        #c2dfe3ff,
-        #9db4c0ff,
-        #5c6b73ff,
-        #253237ff
-      );
-    }
-.label-text{
-  color: black;
-  font-weight: 600;
-  font-size: 1.2rem;
-  text-align: right;
-}
-  }
-</style>
-<script>
-const handlesubmit = async (e) =>{
- 
-const response = await fetch("https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}", {
-  method: "POST", 
-  headers: {
-    "Content-Type": "application/json",
-   
-  },
-  body: JSON.stringify(e.target.value), 
-});
-console.log(response.json()) ;
-}
-</script>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        .container {
+          background: linear-gradient(
+            45deg,
+            #e0fbfcff,
+            #c2dfe3ff,
+            #9db4c0ff,
+            #5c6b73ff,
+            #253237ff
+          );
+          color: whitesmoke;
+          height: 100vh;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+  
+        .form-container {
+          margin: 4rem;
+          padding: 1.5rem;
+  
+          height: auto;
+          width: 40%;
+          border: 2px solid rgb(0, 0, 0);
+          border-radius: 5px;
+        }
+        @media screen and (max-width: 768px) {
+          .form-container {
+            width: 80%;
+          }
+        }
+        .label-text {
+          color: black;
+          font-weight: 600;
+          font-size: 1.2rem;
+          text-align: left;
+        }
+        .input-field {
+          height: 3rem;
+          width: 100%;
+          border: none;
+          margin: 3% 0%;
+          padding: 2%;
+        }
+        .submit-btn {
+          height: 2.5rem;
+          width: 35%;
+          background: #1976d2;
+          color: white;
+          border: none;
+          font-size: 16px;
+          font-weight: 600;
+          margin: 3% 0%;
+        }
+        .submit-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      </style>
+      <script>
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+          const passwordInput = document.getElementById("password");
+          console.log(passwordInput.value);
+        };
+      </script>
+      <div class="container">
+      <h1>Reset Your Password</h1>
 
-        <div className="container">
-          <h1 >Reset Yor Password</h1>
-          <form onsubmit="handleSubmit()">
-            <input type="hidden" name="userId" value="${id}">
-            <input type="hidden" name="token" value="${token}">
-            <label for="password" classname="label-text">New Password</label>
-            <input type="password" name="password" id="password" required placeholder="Enter Your New Password"> <br/>
-            <label for="confirmpassword">Confirm Password</label>
-            <input type="password" name="password" id="confirmpassword" required placeholder="Confirm Password"><br/>
-            <button type="submit">Reset Password</button>
-          </form>
+      <form onsubmit="handleSubmit(event)" class="form-container">
+        <input type="hidden" name="userId" value="${id}" />
+        <input type="hidden" name="token" value="${token}" />
+        <label for="password" class="label-text">New Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+          class="input-field"
+          placeholder="Enter Your New Password"
+        />
+        <br />
+        <label for="confirmPassword" class="label-text">Confirm Password</label>
+        <input
+          type="password"
+          name="password"
+          id="confirmPassword"
+          class="input-field"
+          required
+          placeholder="Confirm Your Password"
+        />
+        <div class="submit-container">
+          <button type="submit" class="submit-btn">Reset Password</button>
         </div>
+      </form>
+    </div>
       `);
       } else {
         res.status(403).send({ Message: "Not Verified " });
@@ -207,7 +233,7 @@ console.log(response.json()) ;
 
 router.post("/reset-password/:id/:token", async (req, res) => {
   try {
-    console.log(req.body);
+    console.log();
     // const { id, token } = req.params;
     // const userData = await Users.findById(id);
     // const secret = process.env.MY_SECRET_KEY + userData.password;

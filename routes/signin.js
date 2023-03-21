@@ -168,10 +168,25 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 }
   }
 </style>
+<script>
+const handlesubmit = async (e) =>{
+ 
+const response = await fetch("")
+const response = await fetch("https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}", {
+  method: "POST", 
+  headers: {
+    "Content-Type": "application/json",
+   
+  },
+  body: JSON.stringify(e.target.value), 
+});
+console.log(response.json()) ;
+}
+</script>
 
         <div className="container">
           <h1 >Reset Yor Password</h1>
-          <form action="/api/reset-password/${id}/${token}" method="POST">
+          <form onsubmit="handleSubmit">
             <input type="hidden" name="userId" value="${id}">
             <input type="hidden" name="token" value="${token}">
             <label for="password" classname="label-text">New Password</label>

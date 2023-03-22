@@ -186,8 +186,8 @@ router.get("/reset-password/:id/:token", async (req, res) => {
       </style>
       <script>
         const handleSubmit = async (e) => {
-          e.preventDefault();
-          const passwordInput = document.getElementById("password");
+     
+        const passwordInput = document.getElementById("password");
           const passwordToBeChanged = { password: passwordInput.value };
           console.log(passwordToBeChanged);
           const response = await fetch(

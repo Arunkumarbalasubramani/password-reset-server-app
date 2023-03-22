@@ -26,7 +26,7 @@ router.post("/user/passwordreset", async (req, res) => {
           expiresIn: "5m",
         }
       );
-      const link = `https://password-reset-serverapp.onrender.com/api/reset-password/${userData._id}/${token}`;
+      const link = `https://password-reset-fe-akb.netlify.app//user/resetpassword/${userData._id}/${token}`;
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -106,32 +106,32 @@ router.post("/user/signin", async (req, res) => {
   }
 });
 
-router.get("/reset-password/:id/:token", async (req, res) => {
-  try {
-    const { id, token } = req.params;
-    const userData = await Users.findById(id);
-    const secret = process.env.MY_SECRET_KEY + userData.password;
-    if (!userData) {
-      res.status(404).send("User Does Not Exist");
-    } else {
-      const verifyToken = jwt.verify(token, secret);
-      if (verifyToken) {
-        const viewPath = path.join(__dirname, "../views/index.ejs");
-        res.render(viewPath, { id, token });
-      } else {
-        res.status(403).send({ Message: "Not Verified " });
-      }
-    }
-  } catch (error) {
-    res.status(500).send(`Error While Connecting to Server- ${error}`);
-  }
-});
+// router.get("/reset-password/:id/:token", async (req, res) => {
+//   try {
+//     const { id, token } = req.params;
+//     const userData = await Users.findById(id);
+//     const secret = process.env.MY_SECRET_KEY + userData.password;
+//     if (!userData) {
+//       res.status(404).send("User Does Not Exist");
+//     } else {
+//       const verifyToken = jwt.verify(token, secret);
+//       if (verifyToken) {
+//         const viewPath = path.join(__dirname, "../views/index.ejs");
+//         res.render(viewPath, { id, token });
+//       } else {
+//         res.status(403).send({ Message: "Not Verified " });
+//       }
+//     }
+//   } catch (error) {
+//     res.status(500).send(`Error While Connecting to Server- ${error}`);
+//   }
+// });
 
 router.post("/reset-password/:id/:token", async (req, res) => {
   try {
     const { id, token } = req.params;
     const { password } = req.body;
-    console.log(password);
+
     const userData = await Users.findById(id);
     const secret = process.env.MY_SECRET_KEY + userData.password;
     if (!userData) {

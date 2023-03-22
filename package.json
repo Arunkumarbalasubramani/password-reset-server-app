@@ -1,6 +1,6 @@
 {
   "name": "password-reset-server-app",
-  "proxy": "http://localhost:3000/",
+  "proxy": "https://password-reset-fe-akb.netlify.app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

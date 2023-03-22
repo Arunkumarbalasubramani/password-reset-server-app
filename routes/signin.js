@@ -131,6 +131,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   try {
     const { id, token } = req.params;
     const { password } = req.body;
+    console.log(password);
     const userData = await Users.findById(id);
     const secret = process.env.MY_SECRET_KEY + userData.password;
     if (!userData) {

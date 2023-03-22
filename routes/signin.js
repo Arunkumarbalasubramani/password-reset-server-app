@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const generateHasedPassword = require("../routes/bcrypt");
 const nodemailer = require("nodemailer");
+const path = require("path");
 
 router.get("/signin", (req, res) => {
   res.send("Welcome to sign in Page");
@@ -115,7 +116,8 @@ router.get("/reset-password/:id/:token", async (req, res) => {
     } else {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
-        res.render("index");
+        const viewPath = path.join(__dirname, "../views/index");
+        res.render(viewPath);
       } else {
         res.status(403).send({ Message: "Not Verified " });
       }

@@ -195,7 +195,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
           const passwordToBeChanged = { password: passwordInput.value };
        
           const response = await fetch(
-            " https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}",
+            " https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}",
             {
               method: "POST",
               headers: {
@@ -233,7 +233,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
         />
         <div class="submit-container">
         <button type="submit" class="submit-btn">
-        <a href="https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}" class="link">Reset Password</a>
+        Reset Password
       </button>
         </div>
       </form>
@@ -248,7 +248,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   }
 });
 
-router.post("/user/reset-password/:id/:token", async (req, res) => {
+router.post("/reset-password/:id/:token", async (req, res) => {
   try {
     const { id, token } = req.params;
     const userData = await Users.findById(id);

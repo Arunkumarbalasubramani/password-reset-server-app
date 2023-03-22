@@ -115,7 +115,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
     } else {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
-        res.render("index", { email: verify.email });
+        res.render("index", { email: token.email });
       } else {
         res.status(403).send({ Message: "Not Verified " });
       }

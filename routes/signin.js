@@ -32,7 +32,7 @@ router.post("/user/signup", async (req, res) => {
       const saveUser = await user.save();
       res.status(201).send({ Message: " User SignedUp Successfully" });
     } catch (error) {
-      res.status(403).send(`Error While Signing Up -${error}`);
+      res.status(403).send({ Error: `-${error}` });
     }
   }
 });
@@ -42,7 +42,7 @@ router.post("/user/signin", async (req, res) => {
   try {
     const user = await Users.findOne({ name: req.body.name });
     if (!user) {
-      res.status(401).send({ Message: "User Not Found.Please Sign Up" });
+      res.status(404).send({ Message: "User Not Found.Please Sign Up" });
     } else {
       const isMatch = await bcrypt.compare(req.body.password, user.password);
       if (isMatch) {

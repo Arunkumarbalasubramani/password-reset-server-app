@@ -130,6 +130,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 router.post("/reset-password/:id/:token", async (req, res) => {
   try {
     const { id, token } = req.params;
+    const { password } = req.body;
     const userData = await Users.findById(id);
     const secret = process.env.MY_SECRET_KEY + userData.password;
     if (!userData) {
@@ -137,8 +138,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     } else {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
-        const newPassword = req.body.password;
-        const hashedPassword = await generateHasedPassword(newPassword);
+        const hashedPassword = await generateHasedPassword(password);
         userData.password = hashedPassword;
         await userData.save();
         res.status(200).send("Password updated successfully");

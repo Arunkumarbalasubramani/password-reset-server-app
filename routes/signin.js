@@ -188,36 +188,35 @@ router.get("/reset-password/:id/:token", async (req, res) => {
           color: white;
         }
       </style>
-      <script>
-        const handleSubmit = async (e) => {
+      // <script>
+      //   const handleSubmit = async (e) => {
      
-          const passwordInput = document.getElementById("password");
-          const passwordToBeChanged = { password: passwordInput.value };
+      //     const passwordInput = document.getElementById("password");
+      //     const passwordToBeChanged = { password: passwordInput.value };
        
-          try {
-            const response = await fetch(
-              "https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(passwordToBeChanged),
-              }
-            );
+      //     try {
+      //       const response = await fetch(
+      //         "https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}",
+      //         {
+      //           method: "POST",
+      //           headers: {
+      //             "Content-Type": "application/json",
+      //           },
+      //           body: JSON.stringify(passwordToBeChanged),
+      //         }
+      //       );
             
-          return response.json()
-          } catch (error) {
-            console.error(error);
-            // Handle error
-          }
-        };
-        };
-      </script>
+      //     return response.json()
+      //     } catch (error) {
+      //       console.error(error);
+      //     }
+      //   };
+      //   };
+      // </script>
       <div class="container">
       <h1>Reset Your Password</h1>
 
-      <form onsubmit="handleSubmit(event)" class="form-container">
+      <form action ="" method ="post" class="form-container">
         <input type="hidden" name="userId" value="${id}" />
         <input type="hidden" name="token" value="${token}" />
         <label for="password" class="label-text">New Password</label>

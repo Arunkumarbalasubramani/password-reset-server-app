@@ -7,7 +7,7 @@ const app = express();
 const Users = require("./models/userModel");
 const jwt = require("jsonwebtoken");
 connection();
-
+app.set("view engine", "ejs");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());

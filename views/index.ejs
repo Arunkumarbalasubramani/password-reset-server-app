@@ -82,7 +82,7 @@
     <div class="container">
       <h1>Reset Your Password</h1>
 
-      <form onsubmit="handleSubmit(event)" class="form-container">
+      <form action=" " method="post" class="form-container">
         <input type="hidden" name="userId" value="${id}" />
         <input type="hidden" name="token" value="${token}" />
         <label for="password" class="label-text">New Password</label>
@@ -105,7 +105,9 @@
           placeholder="Confirm Your Password"
         />
         <div class="submit-container">
-          <button type="submit" class="submit-btn">Reset Password</button>
+          <button type="submit" class="submit-btn" value="submit">
+            Reset Password
+          </button>
         </div>
       </form>
     </div>

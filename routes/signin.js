@@ -265,7 +265,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     } else {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
-        const newPassword = req.body.password;
+        const newPassword = req.body.password[0];
         const hashedPassword = await generateHasedPassword(newPassword);
         userData.password = hashedPassword;
         await userData.save();

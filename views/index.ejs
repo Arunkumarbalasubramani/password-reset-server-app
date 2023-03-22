@@ -77,31 +77,12 @@
         color: white;
       }
     </style>
-    <script>
-      const handleSubmit = async (e) => {
-        const passwordInput = document.getElementById("password");
-        const passwordTobeChanged = passwordInput.value;
-        await fetch("", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(passwordTobeChanged),
-        });
-        console.log(response.json());
-      };
-    </script>
   </head>
   <body>
     <div class="container">
       <h1>Reset Your Password</h1>
 
-      <form
-        action=" "
-        method="post"
-        class="form-container"
-        onsubmit="handleSubmit(event)"
-      >
+      <form action="" method="post" class="form-container">
         <label for="password" class="label-text">New Password</label>
         <input
           type="password"

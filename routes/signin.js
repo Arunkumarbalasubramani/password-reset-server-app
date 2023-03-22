@@ -193,7 +193,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
      
           const passwordInput = document.getElementById("password");
           const passwordToBeChanged = { password: passwordInput.value };
-          console.log(passwordToBeChanged);
+       
           const response = await fetch(
             " https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}",
             {

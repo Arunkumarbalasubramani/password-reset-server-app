@@ -153,9 +153,4 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   }
 });
 
-router.post("/dummy", (req, res) => {
-  console.log("I am");
-  console.log(req.body.password);
-  res.send("Password Updated Successfully");
-});
 module.exports = router;

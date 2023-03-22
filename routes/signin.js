@@ -117,7 +117,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
         const viewPath = path.join(__dirname, "../views/index.ejs");
-        res.render(viewPath);
+        res.render(viewPath, { id, token });
       } else {
         res.status(403).send({ Message: "Not Verified " });
       }
@@ -151,5 +151,11 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     console.log(error);
     res.status(500).send(`Error while updating password-${error}`);
   }
+});
+
+router.post("/dummy", (req, res) => {
+  console.log("I am");
+  console.log(req.body.password);
+  res.send("Password Updated Successfully");
 });
 module.exports = router;

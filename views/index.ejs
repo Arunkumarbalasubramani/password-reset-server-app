@@ -82,7 +82,11 @@
     <div class="container">
       <h1>Reset Your Password</h1>
 
-      <form action="" method="post" class="form-container">
+      <form
+        action="https://password-reset-serverapp.onrender.com/api/reset-password/<%= id%>/<%= token%>"
+        method="post"
+        class="form-container"
+      >
         <label for="password" class="label-text">New Password</label>
         <input
           type="password"

@@ -194,16 +194,24 @@ router.get("/reset-password/:id/:token", async (req, res) => {
           const passwordInput = document.getElementById("password");
           const passwordToBeChanged = { password: passwordInput.value };
        
-          const response = await fetch(
-            " https://password-reset-serverapp.onrender.com/api/reset-password/${id}/${token}",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(passwordToBeChanged),
-            }
-          );
+          try {
+            const response = await fetch(
+              "https://password-reset-serverapp.onrender.com/api/reset-password/6419dfa89dd0e84485044dd0/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydW5rdW1hci52YnMuYkBnbWFpbC5jb20iLCJpZCI6IjY0MTlkZmE4OWRkMGU4NDQ4NTA0NGRkMCIsImlhdCI6MTY3OTQ1OTg0NSwiZXhwIjoxNjc5NDYwMTQ1fQ.tIx23-26WVwAq6oNYUnTnim6JI8oX99O4gPF53XpwKs",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(passwordToBeChanged),
+              }
+            );
+            
+          return response.json()
+          } catch (error) {
+            console.error(error);
+            // Handle error
+          }
+        };
         };
       </script>
       <div class="container">

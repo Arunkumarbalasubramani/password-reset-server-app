@@ -183,13 +183,17 @@ router.get("/reset-password/:id/:token", async (req, res) => {
           align-items: center;
           justify-content: center;
         }
+        .link {
+          text-decoration: none;
+          color: white;
+        }
       </style>
       <script>
         const handleSubmit = async (e) => {
      
-        const passwordInput = document.getElementById("password");
+          const passwordInput = document.getElementById("password");
           const passwordToBeChanged = { password: passwordInput.value };
-
+          console.log(passwordToBeChanged);
           const response = await fetch(
             " https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}",
             {
@@ -228,7 +232,9 @@ router.get("/reset-password/:id/:token", async (req, res) => {
           placeholder="Confirm Your Password"
         />
         <div class="submit-container">
-          <button type="submit" class="submit-btn">Reset Password</button>
+        <button type="submit" class="submit-btn">
+        <a href="https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}" class="link">Reset Password</a>
+      </button>
         </div>
       </form>
     </div>

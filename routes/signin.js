@@ -188,17 +188,18 @@ router.get("/reset-password/:id/:token", async (req, res) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
           const passwordInput = document.getElementById("password");
-  
+          const passwordToBeChanged = { password: passwordInput.value };
+          console.log(passwordToBeChanged);
           const response = await fetch(
-            "https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}",
+            " https://password-reset-serverapp.onrender.com/api/user/reset-password/${id}/${token}",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(passwordInput.value),
+              body: JSON.stringify(passwordToBeChanged),
             }
-            return response.json();
+          );
         };
       </script>
       <div class="container">
@@ -245,6 +246,7 @@ router.post("/user/reset-password/:id/:token", async (req, res) => {
   try {
     console.log("entered");
     console.log(req.body);
+
     const { id, token } = req.params;
     const userData = await Users.findById(id);
     const secret = process.env.MY_SECRET_KEY + userData.password;
@@ -253,7 +255,7 @@ router.post("/user/reset-password/:id/:token", async (req, res) => {
     } else {
       const verifyToken = jwt.verify(token, secret);
       if (verifyToken) {
-        const newPassword = req.body;
+        const newPassword = req.body.password;
         const hashedPassword = await generateHasedPassword(newPassword);
         userData.password = hashedPassword;
         await userData.save();

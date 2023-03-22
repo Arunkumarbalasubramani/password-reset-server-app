@@ -26,7 +26,7 @@ router.post("/user/passwordreset", async (req, res) => {
           expiresIn: "5m",
         }
       );
-      const link = `https://password-reset-fe-akb.netlify.app//user/resetpassword/${userData._id}/${token}`;
+      const link = `https://password-reset-fe-akb.netlify.app/user/resetpassword/${userData._id}/${token}`;
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
